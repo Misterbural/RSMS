@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
   resources :sendeds
   resources :groups
-=======
+  resources :contacts
+>>>>>>> 60f106861d56355b96dbcfb6b19f51026da6302c
   resources :events
   resources :commands
 >>>>>>> 98e821e2d08962c360f4f403c75b729a0e496f17
