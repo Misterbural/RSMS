@@ -10,3 +10,17 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 20150505075244) do
+
+  create_table "commands", force: :cascade do |t|
+    t.string   "name",       limit: 25
+    t.string   "script",     limit: 100
+    t.boolean  "admin"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "commands", ["name"], name: "index_commands_on_name", unique: true
+
+end
