@@ -37,13 +37,10 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
-<<<<<<< HEAD
-    bcrypt (3.1.10)
-=======
     autoprefixer-rails (5.1.11)
       execjs
       json
->>>>>>> 98e821e2d08962c360f4f403c75b729a0e496f17
+    bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.2)
@@ -120,6 +117,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+      json (~> 1.4)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     sass (3.4.13)
@@ -132,7 +130,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    spring (1.3.4)
+    spring (1.3.5)
     sprockets (3.0.3)
       rack (~> 1.0)
     sprockets-rails (2.2.4)
