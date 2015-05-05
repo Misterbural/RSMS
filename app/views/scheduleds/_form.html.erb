@@ -1,0 +1,25 @@
+<%= form_for(@scheduled) do |f| %>
+  <% if @scheduled.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@scheduled.errors.count, "error") %> prohibited this scheduled from being saved:</h2>
+
+      <ul>
+      <% @scheduled.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
+  </div>
+  <div class="field">
+    <%= f.label :prgress %><br>
+    <%= f.check_box :prgress %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

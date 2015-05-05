@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @scheduled.content %>
+</p>
+
+<p>
+  <strong>Prgress:</strong>
+  <%= @scheduled.prgress %>
+</p>
+
+<%= link_to 'Edit', edit_scheduled_path(@scheduled) %> |
+<%= link_to 'Back', scheduleds_path %>
