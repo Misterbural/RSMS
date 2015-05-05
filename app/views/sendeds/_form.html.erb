@@ -1,0 +1,25 @@
+<%= form_for(@sended) do |f| %>
+  <% if @sended.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sended.errors.count, "error") %> prohibited this sended from being saved:</h2>
+
+      <ul>
+      <% @sended.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :target %><br>
+    <%= f.text_field :target %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_area :content %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

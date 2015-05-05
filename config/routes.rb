@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
   resources :sendeds
   resources :groups
+=======
+  resources :events
+  resources :commands
+>>>>>>> 98e821e2d08962c360f4f403c75b729a0e496f17
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

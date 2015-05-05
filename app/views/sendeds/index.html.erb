@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Sendeds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Target</th>
+      <th>Content</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sendeds.each do |sended| %>
+      <tr>
+        <td><%= sended.target %></td>
+        <td><%= sended.content %></td>
+        <td><%= link_to 'Show', sended %></td>
+        <td><%= link_to 'Edit', edit_sended_path(sended) %></td>
+        <td><%= link_to 'Destroy', sended, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sended', new_sended_path %>
