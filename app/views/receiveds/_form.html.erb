@@ -1,0 +1,29 @@
+<%= form_for(@received) do |f| %>
+  <% if @received.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@received.errors.count, "error") %> prohibited this received from being saved:</h2>
+
+      <ul>
+      <% @received.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :send_by %><br>
+    <%= f.text_field :send_by %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
+  </div>
+  <div class="field">
+    <%= f.label :is_command %><br>
+    <%= f.check_box :is_command %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

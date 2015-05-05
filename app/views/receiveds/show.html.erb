@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Send by:</strong>
+  <%= @received.send_by %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @received.content %>
+</p>
+
+<p>
+  <strong>Is command:</strong>
+  <%= @received.is_command %>
+</p>
+
+<%= link_to 'Edit', edit_received_path(@received) %> |
+<%= link_to 'Back', receiveds_path %>
