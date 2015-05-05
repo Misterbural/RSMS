@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Scheduleds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Prgress</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @scheduleds.each do |scheduled| %>
+      <tr>
+        <td><%= scheduled.content %></td>
+        <td><%= scheduled.prgress %></td>
+        <td><%= link_to 'Show', scheduled %></td>
+        <td><%= link_to 'Edit', edit_scheduled_path(scheduled) %></td>
+        <td><%= link_to 'Destroy', scheduled, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Scheduled', new_scheduled_path %>
