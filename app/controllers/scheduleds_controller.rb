@@ -1,6 +1,7 @@
 class ScheduledsController < ApplicationController
   before_action :set_scheduled, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  
   # GET /scheduleds
   # GET /scheduleds.json
   def index
