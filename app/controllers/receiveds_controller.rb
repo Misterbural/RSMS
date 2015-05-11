@@ -1,5 +1,6 @@
 class ReceivedsController < ApplicationController
   before_action :set_received, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /receiveds
   # GET /receiveds.json

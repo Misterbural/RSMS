@@ -1,6 +1,7 @@
 class SendedsController < ApplicationController
   before_action :set_sended, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  
   # GET /sendeds
   # GET /sendeds.json
   def index
