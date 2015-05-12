@@ -1,10 +1,8 @@
 class CreateContactsGroups < ActiveRecord::Migration
   def change
     create_table :contacts_groups do |t|
-      t.integer :group_id
-      t.integer :contact_id
-
-      t.timestamps null: false
+      t.belongs_to :group, index:true
+      t.belongs_to :contact, index:true
     end
   end
 end
