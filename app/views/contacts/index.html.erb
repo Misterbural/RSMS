@@ -23,8 +23,13 @@
           <td><%= contact.number %></td>
           <!-- <td><%= link_to 'Show', contact %></td> -->
           <td class="btn-position-table">
-            <%= link_to 'Edit', edit_contact_path(contact) , class: "btn btn-info" %>
-            <%= link_to 'Destroy', contact, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger" %>
+            <%= link_to edit_contact_path(contact) , class: "btn btn-info" do %>
+               <%= icon('edit', 'Edit') %>
+            <% end %>
+            
+            <%= link_to contact, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger" do %>
+              <%= icon('trash-o', 'Delete') %>
+            <% end %>
           </td>
         </tr>
       <% end %>
