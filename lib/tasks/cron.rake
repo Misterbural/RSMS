@@ -17,7 +17,7 @@ namespace :cron do
 			file.close
 
 			#On supprime le fichier
-#			File.delete(Rails.root.join('receiveds', fichier))
+			File.delete(Rails.root.join('receiveds', fichier))
 
 			#On vérifie si il s'agit d'une commande (format = login:password:commande:arguments)
 			sms_content = file_content[1].split(/(?<!\\):/, 4)
@@ -29,18 +29,23 @@ namespace :cron do
 
 				#On vérifie si l'utilisateur est bon
 				user = User.find_by_email(sms_content[0])
-				user_is_valid = user.valid_password?(sms_content[1])				
+				
+				if !user.nil?
+					user_is_valid = user.valid_password?(sms_content[1])				
+				end
 
 				sms_content[1] = "*****" #On remplace le password
 
 				if user_is_valid
 					if (command.admin && user.admin) || !command.admin
 						puts "    User is valid"
-						commands_to_run << {:command_name => sms_content[2], :command_arguments => sms_content[3]}
+						commands_to_run << {:command_name => sms_content[2], :script_file => command.script, :command_arguments => sms_content[3]}
 					else
 						puts "    But user is invalid"
 					end
 
+				else
+					puts "    But user is invalid"
 				end
 			end
 
@@ -49,6 +54,14 @@ namespace :cron do
 			received = Received.create(:send_by => file_content[0], :content => sms_content.join(':'), :is_command => !command.nil?)
 		end
 
-		puts "All SMS parsed"
+		commands_to_run.each do |command|
+			script_path = Rails.root.join('scripts', command[:script_file]).to_s
+			script_arguments = command[:command_arguments]
+			puts "Running command : #{script_path} #{script_arguments}"
+			system(script_path, script_arguments)
+			puts "Command finish"
+		end
+
+		puts "All SMS parsed, all traitements done !"
 	end
 end
