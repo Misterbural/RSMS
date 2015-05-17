@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to 'New Received', new_received_path, class: 'btn btn-primary btn-add' %>
 <h1>Listing Receiveds</h1>
-
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Send by</th>
-      <th>Content</th>
-      <th>Is command</th>
+      <th>Envoyé par</th>
+      <th>Texte</th>
+      <th>Commande</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -27,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Received', new_received_path %>
+<%= link_to 'New Received', new_received_path, class: 'btn btn-primary btn-add' %>
