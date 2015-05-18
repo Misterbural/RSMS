@@ -11,25 +11,44 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    usersId = ContactsGroup.where(['group_id = :group_id', { group_id: params[:id] }])
+    @users = []
+    usersId.each do |id|
+      @users << Contact.find_by_id(id.contact_id)
+    end
   end
 
   # GET /groups/new
   def new
     @group = Group.new
     @contacts = Contact.all
+    @usersInGroup = []
   end
 
   # GET /groups/1/edit
   def edit
+    @contacts = Contact.all
+    usersId = ContactsGroup.where(['group_id = :group_id', { group_id: params[:id] }])
+    @usersInGroup = []
+    usersId.each do |id|
+      @usersInGroup << Contact.find_by_id(id.contact_id)
+    end
   end
 
   # POST /groups
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
+    users = params[:contacts]
     respond_to do |format|
       if @group.save
+        if users
+          users.each do |user|
+            if !Contact.find_by_id(user).nil?
+              ContactsGroup.create(group_id: @group.id, contact_id: user)
+            end
+          end
+        end
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -41,9 +60,18 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
-  def update
+  def update    
+    users = params[:contacts]
     respond_to do |format|
       if @group.update(group_params)
+        ContactsGroup.destroy_all(group_id: params[:id])
+        if users
+          users.each do |user|
+            if !Contact.find_by_id(user).nil?
+              ContactsGroup.create(group_id: @group.id, contact_id: user)
+            end
+          end
+        end
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else

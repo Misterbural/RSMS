@@ -1,4 +1,3 @@
-
 <%= simple_form_for @scheduled do |f| %>
   <% if @scheduled.errors.any? %>
     <div id="error_explanation">
@@ -12,37 +11,47 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.input :content, as: :text %>
-  </div>
-
-  <label>Numéro ciblé</label><br>
 
 
-  <%= f.input :send_at %>
-  <label>Contacts cibles </label><br>
-  <% @contacts.each do |contact| %>
-    <% if @contactsInGroup.include? contact %>
-      <%= check_box_tag "contacts[]", contact.id, true %>
-    <% else %>
-      <%= check_box_tag "contacts[]", contact.id, false %>
+  <div class="form-inputs">
+    <%= f.input :content %>
+
+    <%= f.input :send_at, class: "input-group date", id: "datetimepicker2" %>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker();
+            });
+        </script>
+
+  
+
+    <label>Numéro ciblé</label><br>
+
+
+    
+    <label>Contacts cibles </label><br>
+    <% @contacts.each do |contact| %>
+      <% if @contactsInGroup.include? contact %>
+        <%= check_box_tag "contacts[]", contact.id, true %>
+      <% else %>
+        <%= check_box_tag "contacts[]", contact.id, false %>
+      <% end %>
+      <%= label_tag(:contact, contact.name) %>
     <% end %>
-    <%= label_tag(:contact, contact.name) %>
-  <% end %>
-  <br>
-   <label>Groups cibles </label><br>
-   <% @groups.each do |group| %>
-    <% if @groupsInGroup.include? group %>
-      <%= check_box_tag "groups[]", group.id, true %>
-    <% else %>
-      <%= check_box_tag "groups[]", group.id, false %>
+    <br>
+     <label>Groups cibles </label><br>
+     <% @groups.each do |group| %>
+      <% if @groupsInGroup.include? group %>
+        <%= check_box_tag "groups[]", group.id, true %>
+      <% else %>
+        <%= check_box_tag "groups[]", group.id, false %>
+      <% end %>
+      <%= label_tag(:group, group.name) %>
     <% end %>
-    <%= label_tag(:group, group.name) %>
-  <% end %>
-  <br>
+    <br>
 
-  <div class="actions">
-    <%= f.submit %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
   </div>
-
 <% end %>

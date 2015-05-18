@@ -14,7 +14,11 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %> <br>
       <% @contacts.each do |contact| %>
-        <%= check_box_tag(:contact, contact.id) %>
+        <% if @usersInGroup.include? contact %>
+          <%= check_box_tag "contacts[]", contact.id, true %>
+        <% else %>
+          <%= check_box_tag "contacts[]", contact.id, false %>
+        <% end %>
         <%= label_tag(:contact, contact.name) %>
         <br>
       <% end %>    
