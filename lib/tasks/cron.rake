@@ -1,4 +1,40 @@
 namespace :cron do
+	desc "Permet d'envoyer les SMS programmés"
+	task :send => :environment do
+		
+		#On passe tous les SMS non encore envoyé en IN progress
+		scheduleds = Scheduled.where(['progress = :progress AND send_at < datetime()', { progress: 0 }])
+
+		if scheduleds.nil?
+			exit
+		end
+
+		scheduleds.each do |scheduled|
+			puts "#{scheduled.id} is now in progress"
+			scheduled.update_attribute(:progress, true)
+		end
+
+		#On passe sur chaque SMS programmé
+		scheduleds.each do |scheduled|
+			target_numbers = []
+
+			#On recupère tous les numéros
+			numbers = NumbersScheduled.where(['scheduled_id = :scheduled_id', { scheduled_id: scheduled.id }])
+
+			numbers.each do |number|
+				target_numbers << number.number
+			end
+
+			target_numbers.each do |target_number|
+				puts target_number
+			end
+
+			target_numbers.each do |target_number|
+				puts "Envoie du SMS numéro #{scheduled.id} au #{target_number}"
+				system('gammu-smsd-inject', " TEXT #{target_number} -len #{scheduled.content.length} #{scheduled.content}")
+			end
+		end
+	end
 
 	desc "Permet d'enregistrer les SMS reçus !"
 	task :receive => :environment do 

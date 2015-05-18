@@ -18,7 +18,7 @@ class ScheduledsControllerTest < ActionController::TestCase
 
   test "should create scheduled" do
     assert_difference('Scheduled.count') do
-      post :create, scheduled: { content: @scheduled.content, prgress: @scheduled.prgress }
+      post :create, scheduled: { content: @scheduled.content, progress: @scheduled.progress, send_at: @scheduled.send_at }
     end
 
     assert_redirected_to scheduled_path(assigns(:scheduled))
@@ -35,7 +35,7 @@ class ScheduledsControllerTest < ActionController::TestCase
   end
 
   test "should update scheduled" do
-    patch :update, id: @scheduled, scheduled: { content: @scheduled.content, prgress: @scheduled.prgress }
+    patch :update, id: @scheduled, scheduled: { content: @scheduled.content, progress: @scheduled.progress, send_at: @scheduled.send_at }
     assert_redirected_to scheduled_path(assigns(:scheduled))
   end
 
