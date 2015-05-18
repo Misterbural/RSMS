@@ -14,7 +14,10 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require_tree .
+//= require_tree
+//= require moment
+//= require bootstrap-datetimepicker
+//= require moment/fr
 
 function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
