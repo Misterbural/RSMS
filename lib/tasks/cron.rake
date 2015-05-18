@@ -25,13 +25,19 @@ namespace :cron do
 				target_numbers << number.number
 			end
 
-			target_numbers.each do |target_number|
-				puts target_number
+			#On récupère tous les contacts
+			contacts_scheduleds = ContactsScheduled.where(['scheduled_id = :scheduled_id', { scheduled_id: scheduled.id }])
+			contacts_scheduleds.each do |contact_scheduled|
+				contact = Contact.find_by_id(contact_scheduled.contact_id)
+				if !contact.nil?
+					target_numbers << contact.number
+				end
 			end
 
+			#On envoie tous les SMS
 			target_numbers.each do |target_number|
 				puts "Envoie du SMS numéro #{scheduled.id} au #{target_number}"
-				system('gammu-smsd-inject', " TEXT #{target_number} -len #{scheduled.content.length} #{scheduled.content}")
+				system("(gammu-smsd-inject TEXT #{Shellwords.escape(target_number)} -len #{scheduled.content.length} -text #{Shellwords.escape(scheduled.content)}) >/dev/null 2>/dev/null &")
 			end
 		end
 	end
