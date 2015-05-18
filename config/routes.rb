@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
+  resources :scheduleds
+  resources :scheduleds
   devise_for :users
   resources :sendeds
   resources :groups
   resources :contacts
   resources :events
   resources :commands
-  resources :scheduleds
   resources :receiveds
   
   # You can have the root of your site routed with "root"

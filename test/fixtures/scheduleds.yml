@@ -2,8 +2,10 @@
 
 one:
   content: MyString
-  prgress: false
+  progress: false
+  send_at: 2015-05-18 11:44:21
 
 two:
   content: MyString
-  prgress: false
+  progress: false
+  send_at: 2015-05-18 11:44:21

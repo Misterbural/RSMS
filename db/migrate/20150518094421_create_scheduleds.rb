@@ -1,8 +1,9 @@
 class CreateScheduleds < ActiveRecord::Migration
   def change
     create_table :scheduleds do |t|
-      t.string :content, limit: 1000, null: false
-      t.boolean :prgress, null: false
+      t.string :content, limit: 1000
+      t.boolean :progress
+      t.datetime :send_at
 
       t.timestamps null: false
     end
