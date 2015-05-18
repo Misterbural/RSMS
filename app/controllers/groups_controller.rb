@@ -27,9 +27,16 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
+    users = params[:contacts]
     respond_to do |format|
       if @group.save
+        users.each do |user|
+          if !User.find_by_id(user).nil?
+            ContactsGroup.create(group_id: @group.id, contact_id: user)
+          else
+            
+          end
+        end
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
