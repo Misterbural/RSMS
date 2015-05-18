@@ -10,10 +10,14 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name %> <br>
+      <% @contacts.each do |contact| %>
+        <%= check_box_tag "contacts[]", contact.id %>
+        <%= label_tag(:contact, contact.name) %>
+        <br>
+      <% end %>    
   </div>
   <div class="actions">
     <%= f.submit %>

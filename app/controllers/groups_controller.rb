@@ -11,11 +11,17 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    usersId = ContactsGroup.where(['group_id = :group_id', { group_id: params[:id] }])
+    @users = []
+    usersId.each do |id|
+      @users << Contact.find_by_id(id.contact_id)
+    end
   end
 
   # GET /groups/new
   def new
     @group = Group.new
+    @contacts = Contact.all
   end
 
   # GET /groups/1/edit
@@ -26,9 +32,16 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
+    users = params[:contacts]
     respond_to do |format|
       if @group.save
+        if users
+          users.each do |user|
+            if !Contact.find_by_id(user).nil?
+              ContactsGroup.create(group_id: @group.id, contact_id: user)
+            end
+          end
+        end
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else

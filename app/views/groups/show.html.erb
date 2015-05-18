@@ -4,6 +4,11 @@
   <strong>Name:</strong>
   <%= @group.name %>
 </p>
+<p>
+	<% @users.each do |contact| %>
+        <%= contact.name %> <%= contact.number %> <br>        
+    <% end %>  
+</p>
 
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>

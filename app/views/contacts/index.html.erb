@@ -1,7 +1,7 @@
 <!-- <p id="notice"><%= notice %></p> -->
 <div class="container-fluid">
   <% if notice %>
-  <div class="panel panel-success">
+  <div class="panel panel-success" id="infoBox">
     <div class="panel-heading">
       <h3 class="panel-title">Successfuly</h3>
     </div>
@@ -47,3 +47,10 @@
   </table>
   <%= link_to 'New Contact', new_contact_path, class: "btn btn-success" %>
 </div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    infoBoxFadeOut();
+  })
+
+</script>

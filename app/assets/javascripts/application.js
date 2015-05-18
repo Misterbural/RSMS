@@ -23,3 +23,7 @@ function isNumberKey(evt) {
 
     return true;
 }
+
+function infoBoxFadeOut() {
+	jQuery('#infoBox').delay(2000).fadeOut(1000);
+}
