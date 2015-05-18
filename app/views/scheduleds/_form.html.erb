@@ -4,7 +4,12 @@
   <div class="form-inputs">
     <%= f.input :content %>
     <%= f.input :progress %>
-    <%= f.input :send_at %>
+    <%= f.input :send_at, class: "input-group date", id: "datetimepicker2" %>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker();
+            });
+        </script>
   </div>
 
   <div class="form-actions">
