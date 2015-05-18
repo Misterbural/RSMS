@@ -11,8 +11,11 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
-    usersId = ContactsGroup.find_by group_id: params[:id]
-    exit
+    usersId = ContactsGroup.where(['group_id = :group_id', { group_id: params[:id] }])
+    @users = []
+    usersId.each do |id|
+      @users << Contact.find_by_id(id.contact_id)
+    end
   end
 
   # GET /groups/new
