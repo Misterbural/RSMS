@@ -30,6 +30,10 @@
           <td><%= group.id %></td>
           <td><%= group.name %></td>
           <td class="btn-position-table">
+            <%= link_to group, class: "btn btn-success" do %>
+              <%= icon('eye', 'Show') %>
+            <% end %>
+
             <%= link_to edit_group_path(group), class: "btn btn-info" do %>
                <%= icon('edit', 'Edit') %>
             <% end %>
