@@ -1,18 +1,57 @@
-<%= simple_form_for(@scheduled) do |f| %>
-  <%= f.error_notification %>
+<%= simple_form_for @scheduled do |f| %>
+  <% if @scheduled.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@scheduled.errors.count, "error") %> prohibited this scheduled from being saved:</h2>
+
+      <ul>
+      <% @scheduled.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
 
   <div class="form-inputs">
     <%= f.input :content %>
-    <%= f.input :progress %>
+
     <%= f.input :send_at, class: "input-group date", id: "datetimepicker2" %>
         <script type="text/javascript">
             $(function () {
                 $('#datetimepicker2').datetimepicker();
             });
         </script>
-  </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  
+
+    <label>Numéro ciblé</label><br>
+    
+
+    
+    <label>Contacts cibles </label><br>
+    <% @contacts.each do |contact| %>
+      <% if @contactsInGroup.include? contact %>
+        <%= check_box_tag "contacts[]", contact.id, true %>
+      <% else %>
+        <%= check_box_tag "contacts[]", contact.id, false %>
+      <% end %>
+      <%= label_tag(:contact, contact.name) %>
+    <% end %>
+    <br>
+     <label>Groups cibles </label><br>
+     <% @groups.each do |group| %>
+      <% if @groupsInGroup.include? group %>
+        <%= check_box_tag "groups[]", group.id, true %>
+      <% else %>
+        <%= check_box_tag "groups[]", group.id, false %>
+      <% end %>
+      <%= label_tag(:group, group.name) %>
+    <% end %>
+    <br>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
   </div>
 <% end %>

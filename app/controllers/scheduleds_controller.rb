@@ -15,10 +15,29 @@ class ScheduledsController < ApplicationController
   # GET /scheduleds/new
   def new
     @scheduled = Scheduled.new
+    @contacts = Contact.all
+    @groups = Group.all
+
+    @contactsInGroup = []
+    @groupsInGroup = []
   end
 
   # GET /scheduleds/1/edit
   def edit
+    @contacts = Contact.all
+    @groups = Group.all
+
+    contactsId = ContactsScheduled.where(['scheduled_id = :scheduled_id', { scheduled_id: params[:id] }])
+    @contactsInGroup = []
+    contactsId.each do |id|
+      @contactsInGroup << Contact.find_by_id(id.contact_id)
+    end
+
+    groupsId = GroupsScheduled.where(['scheduled_id = :scheduled_id', { scheduled_id: params[:id] }])
+    @groupsInGroup = []
+    groupsId.each do |id|
+      @groupsInGroup << Group.find_by_id(id.group_id)
+    end
   end
 
   # POST /scheduleds
@@ -26,8 +45,34 @@ class ScheduledsController < ApplicationController
   def create
     @scheduled = Scheduled.new(scheduled_params)
 
+    if params[:contacts]
+      dest_contacts = params[:contacts]
+    end
+
+    if params[:groups]
+      dest_groups = params[:groups]
+    end
+
     respond_to do |format|
       if @scheduled.save
+        
+        if dest_contacts
+          dest_contacts.each do |dest_contact|
+            if !Contact.find_by_id(dest_contact).nil?
+             ContactsScheduled.create(scheduled_id: @scheduled.id, contact_id: dest_contact)
+            end
+          end
+        end
+
+        if dest_groups
+          dest_groups.each do |dest_group|
+            if !Group.find_by_id(dest_group).nil?
+             GroupsScheduled.create(scheduled_id: @scheduled.id, group_id: dest_group)
+            end
+          end
+        end
+            
+         
         format.html { redirect_to @scheduled, notice: 'Scheduled was successfully created.' }
         format.json { render :show, status: :created, location: @scheduled }
       else
@@ -40,8 +85,35 @@ class ScheduledsController < ApplicationController
   # PATCH/PUT /scheduleds/1
   # PATCH/PUT /scheduleds/1.json
   def update
+
+    if params[:contacts]
+      dest_contacts = params[:contacts]
+    end
+
+    if params[:groups]
+      dest_groups = params[:groups]
+    end
     respond_to do |format|
       if @scheduled.update(scheduled_params)
+
+        ContactsScheduled.destroy_all(scheduled_id: params[:id])
+        if dest_contacts
+          dest_contacts.each do |dest_contact|
+            if !Contact.find_by_id(dest_contact).nil?
+              ContactsScheduled.create(scheduled_id: @scheduled.id, contact_id: dest_contact)
+            end
+          end
+        end
+
+        GroupsScheduled.destroy_all(scheduled_id: params[:id])
+        if dest_groups
+          dest_groups.each do |dest_group|
+            if !Group.find_by_id(dest_group).nil?
+              GroupsScheduled.create(scheduled_id: @scheduled.id, group_id: dest_group)
+            end
+          end
+        end
+
         format.html { redirect_to @scheduled, notice: 'Scheduled was successfully updated.' }
         format.json { render :show, status: :ok, location: @scheduled }
       else
@@ -69,6 +141,8 @@ class ScheduledsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scheduled_params
+
       params.require(:scheduled).permit(:content, :progress, :send_at)
+
     end
 end

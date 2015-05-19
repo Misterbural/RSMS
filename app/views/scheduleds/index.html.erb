@@ -1,7 +1,7 @@
 <!-- <p id="notice"><%= notice %></p> -->
 <div class="container-fluid">
   <% if notice %>
-  <div class="panel panel-success">
+  <div class="panel panel-success" id="infoBox">
     <div class="panel-heading">
       <h3 class="panel-title">Successfuly</h3>
     </div>
@@ -20,7 +20,6 @@
       <tr>
         <th>#</th>
         <th>Content</th>
-        <th>Progress</th>
         <th>Send at</th>
         <th colspan="3"></th>
       </tr>
@@ -31,9 +30,11 @@
         <tr>
           <td><%= scheduled.id %></td>
           <td><%= scheduled.content %></td>
-          <td><%= scheduled.progress %></td>
           <td><%= scheduled.send_at %></td>
           <td class="btn-position-table">
+             <%= link_to scheduled, class: "btn btn-success" do %>
+              <%= icon('eye', 'Show') %>
+            <% end %>
             <%= link_to edit_scheduled_path(scheduled), class: "btn btn-info" do %>
                <%= icon('edit', 'Edit') %>
             <% end %>
@@ -48,3 +49,10 @@
   </table>
   <%= link_to 'New scheduled', new_scheduled_path, class: "btn btn-success" %>
 </div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    infoBoxFadeOut();
+  })
+
+</script>
