@@ -85,8 +85,35 @@ class ScheduledsController < ApplicationController
   # PATCH/PUT /scheduleds/1
   # PATCH/PUT /scheduleds/1.json
   def update
+
+    if params[:contacts]
+      dest_contacts = params[:contacts]
+    end
+
+    if params[:groups]
+      dest_groups = params[:groups]
+    end
     respond_to do |format|
       if @scheduled.update(scheduled_params)
+
+        ContactsScheduled.destroy_all(scheduled_id: params[:id])
+        if dest_contacts
+          dest_contacts.each do |dest_contact|
+            if !Contact.find_by_id(dest_contact).nil?
+              ContactsScheduled.create(scheduled_id: @scheduled.id, contact_id: dest_contact)
+            end
+          end
+        end
+
+        GroupsScheduled.destroy_all(scheduled_id: params[:id])
+        if dest_groups
+          dest_groups.each do |dest_group|
+            if !Group.find_by_id(dest_group).nil?
+              GroupsScheduled.create(scheduled_id: @scheduled.id, group_id: dest_group)
+            end
+          end
+        end
+
         format.html { redirect_to @scheduled, notice: 'Scheduled was successfully updated.' }
         format.json { render :show, status: :ok, location: @scheduled }
       else
