@@ -10,20 +10,38 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %> <br>
-      <% @contacts.each do |contact| %>
-        <% if @usersInGroup.include? contact %>
-          <%= check_box_tag "contacts[]", contact.id, true %>
+  <form class="form-horizontal">
+    <div class="form-group">
+     <%= f.label :name, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.text_field :name, class: "form-control" %> <br>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2">Liste contact : </label><br>
+      <div class="col-sm-10 ">
+        <% @contacts.each do |contact| %>
+          <div class="col-sm-4  ">
+            <% if @usersInGroup.include? contact %>
+              <%= check_box_tag "contacts[]", contact.id, true %>
+            <% else %>
+              <%= check_box_tag "contacts[]", contact.id, false %>
+            <% end %>
+            <%= label_tag(:contact, contact.name) %> 
+            </div>
+          <% end %>
+      </div>    
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+      <div class="col-sm-10">
+        <% if action_name == "edit"%>
+          <%= f.submit "Update group", class: "btn btn-success"  %>
         <% else %>
-          <%= check_box_tag "contacts[]", contact.id, false %>
+          <%= f.submit "Create group", class: "btn btn-success"  %>
         <% end %>
-        <%= label_tag(:contact, contact.name) %>
-        <br>
-      <% end %>    
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+        <%= link_to 'Back', groups_path, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </form>
 <% end %>
