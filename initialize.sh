@@ -3,27 +3,39 @@
 
 #Verifie si sqlite3 est installé
 command -v 'sqlite3'
-if [ $? -ne "0" ] then
+if [ "$?" -ne "0" ]
+then
 	echo 'Installation de sqlite3'
 	apt-get install sqlite3
 fi
 
+#Verifie si nodejs est installé
+command -v 'nodejs'
+if [ "$?" -ne "0" ]
+then
+	echo 'Installation de nodejs'
+	apt-get install nodejs
+fi
+
 #Verifie si gammu est installé
 command -v 'gammu'
-if [ $? -ne "0" ] then
+if [ "$?" -ne "0" ]
+then
 	echo 'Installation de Gammu'
 	apt-get install gammu
 fi
 
 #Verifie si gammu-smsd est installé
 command -v 'gammu-smsd'
-if [ $? -ne "0" ] then
+if [ "$?" -ne "0" ]
+then
 	echo 'Installation de Gammu-smsd'
 	apt-get install gammu-smsd
 fi
 
 #Installation des bundles, migration des données, etc
 bundle install
+rake db:migrate
 rake db:seed
 
 # Verifie si il faut configurer automatiquement gammu
@@ -76,9 +88,11 @@ else
 	echo "Le fichier de configuration /etc/gammu-smsdrcrc n'a pas pu être généré. Vous devrez le configurer à la main."
 fi
 
-echo "RSMS a été installé avec succès.\n\n";
+echo "RSMS a été installé avec succès.";
 
 #On va donner les bon droits aux différents fichiers
+echo "Création du dossier $PWD/receiveds"
+mkdir $PWD/receiveds
 echo "Attribution du dossier $PWD/receiveds à l'utilisateur gammu";
 chmod -R 755 $PWD/receiveds
 chown -R gammu:gammu $PWD/receiveds
