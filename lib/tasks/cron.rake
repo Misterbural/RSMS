@@ -3,7 +3,7 @@ namespace :cron do
 	task :send => :environment do
 		
 		#On passe tous les SMS non encore envoyé en IN progress
-		scheduleds = Scheduled.where(['progress = :progress AND send_at < datetime()', { progress: 0 }])
+		scheduleds = Scheduled.where(['(progress = :progress OR progress is null) AND send_at < datetime()', { progress: 0 }])
 
 		if scheduleds.nil?
 			exit
@@ -51,9 +51,16 @@ namespace :cron do
 
 			#On envoie tous les SMS
 			target_numbers.each do |target_number|
+				#On crée un SMS envoyé
+				puts "Enregistrement envoie SMS #{scheduled.id} au numero #{target_number}"
+				Sended.create(:target => target_number, :content => scheduled.content)
+			
 				puts "Envoie du SMS numéro #{scheduled.id} au #{target_number}"
 				system("(gammu-smsd-inject TEXT #{Shellwords.escape(target_number)} -len #{scheduled.content.length} -text #{Shellwords.escape(scheduled.content)}) >/dev/null 2>/dev/null &")
 			end
+
+			#On supprime le SMS programmé
+			scheduled.destroy
 		end
 	end
 
