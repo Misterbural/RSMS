@@ -11,4 +11,4 @@ for i in `seq $SMS_MESSAGES` ; do
 	fi
 	sms="$sms$sms_text"
 done
-echo "$sms" >> ./receiveds/"$date".txt
+echo "$sms" >> /var/ruby/RSMS/receiveds/"$date".txt
