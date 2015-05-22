@@ -109,10 +109,11 @@ service gammu-smsd stop
 service gammu-smsd start
 
 #Ajout des taches CRON
+
 echo "Ajout des tâches dans la crontab"
-line="* * * * * cd $PWD && rake cron:receive"
+line="* * * * * cd $PWD && `command -v rake` cron:receive"
 (crontab -u root -l; echo "$line" ) | crontab -u root -
-line="* * * * * cd $PWD && rake cron:send"
+line="* * * * * cd $PWD && `command -v rake` cron:send"
 (crontab -u root -l; echo "$line" ) | crontab -u root -
 
 echo "Installation terminée avec succès."
