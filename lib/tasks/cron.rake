@@ -101,12 +101,8 @@ namespace :cron do
 				sms_content[1] = "*****" #On remplace le password
 
 				if user_is_valid
-					if (command.admin && user.admin) || !command.admin
 						puts "    User is valid"
 						commands_to_run << {:command_name => sms_content[2], :script_file => command.script, :command_arguments => sms_content[3]}
-					else
-						puts "    But user is invalid"
-					end
 
 				else
 					puts "    But user is invalid"
